@@ -1,6 +1,8 @@
 package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
@@ -15,7 +17,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         setContentView(R.layout.activity_main);
 
         ArrayList<HashMap> books = getBooks();
-        BookListFragment bookList = BookListFragment.newInstance(books);
+        BookListFragment bookListFragment = BookListFragment.newInstance(books);
+
+        FragmentManager f = getSupportFragmentManager();
+        FragmentTransaction t = f.beginTransaction();
+        t.add(R.id.frame1, bookListFragment);
+        t.commit();
     }
 
     private ArrayList<HashMap> getBooks() {
@@ -66,6 +73,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void bookSelected() {
-        
+
     }
 }
