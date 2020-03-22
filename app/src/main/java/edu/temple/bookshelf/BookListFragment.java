@@ -1,6 +1,7 @@
 package edu.temple.bookshelf;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,18 @@ public class BookListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    BookSelectedInterface parentActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if(context instanceof BookSelectedInterface) {
+            parentActivity = (BookSelectedInterface)context;
+        } else {
+            throw new RuntimeException("Please implement BookSelectedInterface!");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +49,10 @@ public class BookListFragment extends Fragment {
         Bundle bundle = new Bundle();
         newFragment.setArguments(bundle);
         return newFragment;
+    }
+
+    interface BookSelectedInterface {
+        public void bookSelected();
     }
 
 }
