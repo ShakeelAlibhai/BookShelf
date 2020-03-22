@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class BookAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return data.get(position);
     }
 
     @Override
@@ -35,6 +36,22 @@ public class BookAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        TextView t = new TextView(c);
+
+        String title = new String();
+        String author = new String();
+
+        HashMap<String, String> h = (HashMap)getItem(position);
+
+        for(String i : h.keySet()) {
+            title = i;
+        }
+
+        for(String i : h.values()) {
+            author = i;
+        }
+
+        t.setText(title + "\n" + author);
+        return t;
     }
 }
