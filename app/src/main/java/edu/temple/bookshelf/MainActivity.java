@@ -7,7 +7,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +62,10 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(book10);
 
         return arrayList;
+    }
+
+    @Override
+    public void bookSelected() {
+        
     }
 }
