@@ -36,7 +36,15 @@ public class BookAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView t = new TextView(c);
+
+        TextView t;
+        if(convertView == null) {
+            t = new TextView(c);
+        } else {
+            t = (TextView)convertView;
+        }
+
+//        TextView t = new TextView(c);
 
         String title = new String();
         String author = new String();
