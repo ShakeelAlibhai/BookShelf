@@ -4,6 +4,7 @@ package edu.temple.bookshelf;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class BookListFragment extends Fragment {
     }
 
     BookSelectedInterface parentActivity;
+    ArrayList<HashMap> books;
 
     @Override
     public void onAttach(Context context) {
@@ -35,6 +37,16 @@ public class BookListFragment extends Fragment {
             parentActivity = (BookSelectedInterface)context;
         } else {
             throw new RuntimeException("Please implement BookSelectedInterface!");
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+        if(bundle != null) {
+            books = (ArrayList<HashMap>)bundle.getSerializable("book_list_key");
         }
     }
 
@@ -49,6 +61,7 @@ public class BookListFragment extends Fragment {
     public static BookListFragment newInstance(ArrayList<HashMap> books) {
         BookListFragment newFragment = new BookListFragment();
         Bundle bundle = new Bundle();
+        bundle.putSerializable("book_list_key", books);
         newFragment.setArguments(bundle);
         return newFragment;
     }
