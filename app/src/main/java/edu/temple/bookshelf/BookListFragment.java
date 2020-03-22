@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -55,6 +57,23 @@ public class BookListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ListView view = (ListView)inflater.inflate(R.layout.fragment_book_list, container, false);
+
+        BookAdapter ba = new BookAdapter(this.getContext(), books);
+        view.setAdapter(ba);
+
+        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                parentActivity.bookSelected();  //Need to pass an argument here!
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return view;
     }
 
