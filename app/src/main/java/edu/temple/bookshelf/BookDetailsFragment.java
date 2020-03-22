@@ -28,4 +28,11 @@ public class BookDetailsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_book_details, container, false);
     }
 
+    public static BookDetailsFragment newInstance() {
+        BookDetailsFragment newFragment = new BookDetailsFragment();
+        Bundle bundle = new Bundle();
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
 }
