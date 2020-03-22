@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +31,7 @@ public class BookListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_book_list, container, false);
     }
 
-    public static BookListFragment newInstance() {
+    public static BookListFragment newInstance(ArrayList<HashMap> books) {
         BookListFragment newFragment = new BookListFragment();
         Bundle bundle = new Bundle();
         newFragment.setArguments(bundle);

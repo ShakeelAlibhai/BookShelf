@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<HashMap> books = getBooks();
+        BookListFragment bookList = BookListFragment.newInstance(books);
     }
 
     private ArrayList<HashMap> getBooks() {
