@@ -53,8 +53,6 @@ public class BookDetailsFragment extends Fragment {
             displayBook(book);
         }
 
-
-
         return v;
     }
 

@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         FragmentTransaction t = f.beginTransaction();
         t.add(R.id.frame1, bookListFragment);
 
-
-
         if(twoPanes) {
             bookDetailsFragment = new BookDetailsFragment();
             t.add(R.id.detailsFrame, bookDetailsFragment);
@@ -92,14 +90,11 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void bookSelected(int index) {
-//        BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(index));
-
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
 
         if(twoPanes) {
             bookDetailsFragment.displayBook(books.get(index));
-//            t.addToBackStack(null).replace(R.id.detailsFrame, bookDetailsFragment);
         } else {
             t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(books.get(index)));
         }
