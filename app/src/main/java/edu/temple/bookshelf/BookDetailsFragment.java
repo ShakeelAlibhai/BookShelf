@@ -28,13 +28,15 @@ public class BookDetailsFragment extends Fragment {
     TextView titleView;
     TextView authorView;
 
+    final static String BOOK_DETAILS_KEY = "book_details_key";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
         if(bundle != null) {
-            book = (HashMap)bundle.getSerializable("book_details_key");
+            book = (HashMap)bundle.getSerializable(BOOK_DETAILS_KEY);
         }
     }
 
@@ -59,7 +61,7 @@ public class BookDetailsFragment extends Fragment {
     public static BookDetailsFragment newInstance(HashMap book) {
         BookDetailsFragment newFragment = new BookDetailsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("book_details_key", book);
+        bundle.putSerializable(BOOK_DETAILS_KEY, book);
         newFragment.setArguments(bundle);
         return newFragment;
     }
