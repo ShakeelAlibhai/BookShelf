@@ -25,6 +25,8 @@ public class BookDetailsFragment extends Fragment {
     }
 
     HashMap<String, String> book;
+    TextView titleView;
+    TextView authorView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +44,27 @@ public class BookDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_book_details, container, false);
 
-        TextView titleView = v.findViewById(R.id.titleView);
-        TextView authorView = v.findViewById(R.id.authorView);
+        titleView = v.findViewById(R.id.titleView);
+        authorView = v.findViewById(R.id.authorView);
 
+        if(book != null) {
+            displayBook(book);
+        }
+
+
+
+        return v;
+    }
+
+    public static BookDetailsFragment newInstance(HashMap book) {
+        BookDetailsFragment newFragment = new BookDetailsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("book_details_key", book);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
+    public void displayBook(HashMap<String, String> book) {
         String title = new String();
         String author = new String();
 
@@ -58,16 +78,6 @@ public class BookDetailsFragment extends Fragment {
 
         titleView.setText(title);
         authorView.setText(author);
-
-        return v;
-    }
-
-    public static BookDetailsFragment newInstance(HashMap book) {
-        BookDetailsFragment newFragment = new BookDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("book_details_key", book);
-        newFragment.setArguments(bundle);
-        return newFragment;
     }
 
 }

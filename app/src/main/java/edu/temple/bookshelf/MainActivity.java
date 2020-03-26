@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     ArrayList<HashMap> books;
     boolean twoPanes;
+    BookDetailsFragment bookDetailsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         t.add(R.id.frame1, bookListFragment);
 
 
+
         if(twoPanes) {
-            BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(0));
+            bookDetailsFragment = new BookDetailsFragment();
             t.add(R.id.detailsFrame, bookDetailsFragment);
         }
 
@@ -90,15 +92,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void bookSelected(int index) {
-        BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(index));
+//        BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(index));
 
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
 
         if(twoPanes) {
-            t.addToBackStack(null).add(R.id.detailsFrame, bookDetailsFragment);
+            bookDetailsFragment.displayBook(books.get(index));
+//            t.addToBackStack(null).replace(R.id.detailsFrame, bookDetailsFragment);
         } else {
-            t.addToBackStack(null).add(R.id.frame1, bookDetailsFragment);
+            t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(books.get(index)));
         }
         t.commit();
     }

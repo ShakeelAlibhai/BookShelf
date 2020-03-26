@@ -47,8 +47,6 @@ public class BookAdapter extends BaseAdapter {
             t = (TextView)convertView;
         }
 
-//        TextView t = new TextView(c);
-
         String title = new String();
         String author = new String();
 

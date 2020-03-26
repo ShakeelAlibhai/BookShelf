@@ -61,16 +61,10 @@ public class BookListFragment extends Fragment {
         BookAdapter ba = new BookAdapter(this.getContext(), books);
         view.setAdapter(ba);
 
-        view.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 parentActivity.bookSelected(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
