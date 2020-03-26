@@ -12,11 +12,14 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
     ArrayList<HashMap> books;
+    boolean twoPanes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        twoPanes = (findViewById(R.id.detailsFrame) != null);
 
         books = getBooks();
         BookListFragment bookListFragment = BookListFragment.newInstance(books);
@@ -24,7 +27,16 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
         t.add(R.id.frame1, bookListFragment);
+
+
+        if(twoPanes) {
+            BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(0));
+            t.add(R.id.detailsFrame, bookDetailsFragment);
+        }
+
         t.commit();
+
+        f.executePendingTransactions();
     }
 
     private ArrayList<HashMap> getBooks() {
