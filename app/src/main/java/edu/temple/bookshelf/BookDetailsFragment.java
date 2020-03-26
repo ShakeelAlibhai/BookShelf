@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -39,7 +40,26 @@ public class BookDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_details, container, false);
+        View v = inflater.inflate(R.layout.fragment_book_details, container, false);
+
+        TextView titleView = v.findViewById(R.id.titleView);
+        TextView authorView = v.findViewById(R.id.authorView);
+
+        String title = new String();
+        String author = new String();
+
+        for(String i : book.keySet()) {
+            title = i;
+        }
+
+        for(String i : book.values()) {
+            author = i;
+        }
+
+        titleView.setText(title);
+        authorView.setText(author);
+
+        return v;
     }
 
     public static BookDetailsFragment newInstance(HashMap book) {
