@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     @Override
-    public void bookSelected() {
+    public void bookSelected(int index) {
 
     }
 }

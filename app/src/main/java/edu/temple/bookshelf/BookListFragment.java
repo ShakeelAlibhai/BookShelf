@@ -65,7 +65,7 @@ public class BookListFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                parentActivity.bookSelected();  //Need to pass an argument here!
+                parentActivity.bookSelected(position);  //Need to pass an argument here!
             }
 
             @Override
@@ -86,7 +86,7 @@ public class BookListFragment extends Fragment {
     }
 
     interface BookSelectedInterface {
-        public void bookSelected();
+        public void bookSelected(int index);
     }
 
 }
