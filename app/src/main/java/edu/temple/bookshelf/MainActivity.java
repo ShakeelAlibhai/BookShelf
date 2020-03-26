@@ -11,12 +11,14 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
+    ArrayList<HashMap> books;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<HashMap> books = getBooks();
+        books = getBooks();
         BookListFragment bookListFragment = BookListFragment.newInstance(books);
 
         FragmentManager f = getSupportFragmentManager();
@@ -73,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void bookSelected(int index) {
+        BookDetailsFragment bookDetailsFragment = BookDetailsFragment.newInstance(books.get(index));
 
+        FragmentManager f = getSupportFragmentManager();
+        FragmentTransaction t = f.beginTransaction();
+        t.add(R.id.frame1, bookDetailsFragment);
+        t.commit();
     }
 }
