@@ -9,6 +9,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Shakeel Alibhai
+//CIS 3515
+
 public class BookAdapter extends BaseAdapter {
 
     private Context c;
