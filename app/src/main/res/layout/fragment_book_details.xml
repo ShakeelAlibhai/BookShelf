@@ -11,12 +11,17 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center|top"
+        android:paddingTop="275"
+        android:text="@string/hello_blank_fragment"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/authorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="TextView"
+        android:textSize="20sp" />
 
 </FrameLayout>
