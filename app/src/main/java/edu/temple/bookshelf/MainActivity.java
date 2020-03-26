@@ -91,7 +91,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
-        t.add(R.id.frame1, bookDetailsFragment);
+
+        if(twoPanes) {
+            t.addToBackStack(null).add(R.id.detailsFrame, bookDetailsFragment);
+        } else {
+            t.addToBackStack(null).add(R.id.frame1, bookDetailsFragment);
+        }
         t.commit();
     }
 }
