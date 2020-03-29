@@ -1,10 +1,12 @@
 package edu.temple.bookshelf;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,21 +18,34 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
     ArrayList<Book> books;
+    ArrayList<Book> results;
     boolean twoPanes;
     BookDetailsFragment bookDetailsFragment;
 
     EditText textView;
     Button searchButton;
 
+    boolean searchStarted = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         twoPanes = (findViewById(R.id.detailsFrame) != null);
 
         books = getBooks();
-        BookListFragment bookListFragment = BookListFragment.newInstance(books);
+
+        BookListFragment bookListFragment;
+
+        if(savedInstanceState != null) {
+            results = (ArrayList<Book>)savedInstanceState.getSerializable("key");
+            searchStarted = true;
+            bookListFragment = BookListFragment.newInstance(results);
+        } else {
+            bookListFragment = BookListFragment.newInstance(books);
+        }
 
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
@@ -52,8 +67,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             @Override
             public void onClick(View v) {
+                searchStarted = true;
                 String searchTerm = textView.getText().toString();
-                ArrayList<Book> results = new ArrayList<>();
+                results = new ArrayList<>();
 
                 for(int i = 0; i < books.size(); i++) {
                     Book currentBook = books.get(i);
@@ -72,6 +88,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 t.commit();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        if(searchStarted) {
+            outState.putSerializable("key", results);
+        }
+
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     private ArrayList<Book> getBooks() {
