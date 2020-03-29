@@ -15,9 +15,9 @@ import java.util.HashMap;
 public class BookAdapter extends BaseAdapter {
 
     private Context c;
-    private ArrayList<HashMap> data;
+    private ArrayList<Book> data;
 
-    public BookAdapter(Context c, ArrayList<HashMap> data) {
+    public BookAdapter(Context c, ArrayList<Book> data) {
         this.c = c;
         this.data = data;
     }
@@ -50,15 +50,10 @@ public class BookAdapter extends BaseAdapter {
         String title = new String();
         String author = new String();
 
-        HashMap<String, String> h = (HashMap)getItem(position);
+        Book h = (Book)getItem(position);
 
-        for(String i : h.keySet()) {
-            title = i;
-        }
-
-        for(String i : h.values()) {
-            author = i;
-        }
+        title = h.getTitle();
+        author = h.getAuthor();
 
         t.setText(title + "\n" + author);
         return t;

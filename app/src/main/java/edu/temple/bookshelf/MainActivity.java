@@ -6,12 +6,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
-    ArrayList<HashMap> books;
+    ArrayList<Book> books;
     boolean twoPanes;
     BookDetailsFragment bookDetailsFragment;
 
@@ -39,48 +40,22 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         f.executePendingTransactions();
     }
 
-    private ArrayList<HashMap> getBooks() {
-        ArrayList<HashMap> arrayList = new ArrayList<>();
+    private ArrayList<Book> getBooks() {
+        ArrayList<Book> arrayList = new ArrayList<>();
+//        ArrayList<HashMap> arrayList = new ArrayList<>();
 
-        HashMap<String, String> book1 = new HashMap<String, String>();
-        book1.put("Title 1", "Author 1");
-        arrayList.add(book1);
-
-        HashMap<String, String> book2 = new HashMap<String, String>();
-        book2.put("Title 2", "Author 2");
-        arrayList.add(book2);
-
-        HashMap<String, String> book3 = new HashMap<String, String>();
-        book3.put("Title 3", "Author 3");
-        arrayList.add(book3);
-
-        HashMap<String, String> book4 = new HashMap<String, String>();
-        book4.put("Title 4", "Author 4");
-        arrayList.add(book4);
-
-        HashMap<String, String> book5 = new HashMap<String, String>();
-        book5.put("Title 5", "Author 5");
-        arrayList.add(book5);
-
-        HashMap<String, String> book6 = new HashMap<String, String>();
-        book6.put("Title 6", "Author 6");
-        arrayList.add(book6);
-
-        HashMap<String, String> book7 = new HashMap<String, String>();
-        book7.put("Title 7", "Author 7");
-        arrayList.add(book7);
-
-        HashMap<String, String> book8 = new HashMap<String, String>();
-        book8.put("Title 8", "Author 8");
-        arrayList.add(book8);
-
-        HashMap<String, String> book9 = new HashMap<String, String>();
-        book9.put("Title 9", "Author 9");
-        arrayList.add(book9);
-
-        HashMap<String, String> book10 = new HashMap<String, String>();
-        book10.put("Title 10", "Author 10");
-        arrayList.add(book10);
+//        HashMap<String, String> book1 = new HashMap<String, String>();
+//        book1.put("Title 1", "Author 1");
+        arrayList.add(new Book(1, "Title 1", "Author 1", ""));
+        arrayList.add(new Book(2, "Title 2", "Author 2", ""));
+        arrayList.add(new Book(3, "Title 3", "Author 3", ""));
+        arrayList.add(new Book(4, "Title 4", "Author 4", ""));
+        arrayList.add(new Book(5, "Title 5", "Author 5", ""));
+        arrayList.add(new Book(6, "Title 6", "Author 6", ""));
+        arrayList.add(new Book(7, "Title 7", "Author 7", ""));
+        arrayList.add(new Book(8, "Title 8", "Author 8", ""));
+        arrayList.add(new Book(9, "Title 9", "Author 9", ""));
+        arrayList.add(new Book(10, "Title 10", "Author 10", ""));
 
         return arrayList;
     }
@@ -93,10 +68,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
 
+        Book toPass = books.get(index);
+
         if(twoPanes) {
-            bookDetailsFragment.displayBook(books.get(index));
+            bookDetailsFragment.displayBook(toPass);
         } else {
-            t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(books.get(index)));
+            t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(
+                    toPass.getID(),
+                    toPass.getTitle(),
+                    toPass.getAuthor()),
+                    toPass.getCoverURL()
+            );
         }
         t.commit();
     }

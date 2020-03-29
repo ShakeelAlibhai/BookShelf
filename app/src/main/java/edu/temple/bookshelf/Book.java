@@ -2,16 +2,20 @@ package edu.temple.bookshelf;
 
 public class Book {
 
-    int id;
-    String title;
-    String author;
-    String coverURL;
+    private int id;
+    private String title;
+    private String author;
+    private String coverURL;
 
-    public Book(int id, String title, String author) {
+    public Book(int id, String title, String author, String coverURL) {
         this.id = id;
         this.title = title;
         this.author = author;
-        coverURL = "";
+        this.coverURL = coverURL;
+    }
+
+    public int getID() {
+        return id;
     }
 
     public String getTitle() {
@@ -20,6 +24,10 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getCoverURL() {
+        return coverURL;
     }
 
 }
