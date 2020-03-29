@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(
                     toPass.getID(),
                     toPass.getTitle(),
-                    toPass.getAuthor()),
+                    toPass.getAuthor(),
                     toPass.getCoverURL()
-            );
+            ));
         }
         t.commit();
     }
