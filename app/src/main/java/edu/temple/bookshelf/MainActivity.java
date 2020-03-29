@@ -17,15 +17,13 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
-    ArrayList<Book> books;
-    ArrayList<Book> results;
+    ArrayList<Book> booksToDisplay;
     boolean twoPanes;
     BookDetailsFragment bookDetailsFragment;
+    BookListFragment bookListFragment;
 
     EditText textView;
     Button searchButton;
-
-    boolean searchStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +33,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         twoPanes = (findViewById(R.id.detailsFrame) != null);
 
-        books = getBooks();
-
-        BookListFragment bookListFragment;
+        booksToDisplay = getBooks();
 
         if(savedInstanceState != null) {
-            results = (ArrayList<Book>)savedInstanceState.getSerializable("key");
-            searchStarted = true;
-            bookListFragment = BookListFragment.newInstance(results);
-        } else {
-            bookListFragment = BookListFragment.newInstance(books);
+            booksToDisplay = (ArrayList<Book>)savedInstanceState.getSerializable("key");
         }
+
+        bookListFragment = BookListFragment.newInstance(booksToDisplay);
 
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
@@ -67,23 +61,23 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             @Override
             public void onClick(View v) {
-                searchStarted = true;
                 String searchTerm = textView.getText().toString();
-                results = new ArrayList<>();
+                booksToDisplay = new ArrayList<>();
 
-                for(int i = 0; i < books.size(); i++) {
-                    Book currentBook = books.get(i);
+                ArrayList<Book> allBooks = getBooks();
+                for(int i = 0; i < allBooks.size(); i++) {
+                    Book currentBook = allBooks.get(i);
                     if(currentBook.getTitle().contains(searchTerm)) {
-                        results.add(currentBook);
+                        booksToDisplay.add(currentBook);
                     } else if(currentBook.getAuthor().contains(searchTerm)) {
-                        results.add(currentBook);
+                        booksToDisplay.add(currentBook);
                     }
                 }
 
                 FragmentManager f = getSupportFragmentManager();
                 FragmentTransaction t = f.beginTransaction();
 
-                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(results));
+                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(booksToDisplay));
 
                 t.commit();
             }
@@ -92,9 +86,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        if(searchStarted) {
-            outState.putSerializable("key", results);
-        }
+        outState.putSerializable("key", booksToDisplay);
 
         super.onSaveInstanceState(outState, outPersistentState);
     }
@@ -127,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         FragmentManager f = getSupportFragmentManager();
         FragmentTransaction t = f.beginTransaction();
 
-        Book toPass = books.get(index);
+        Book toPass = getBooks().get(index);
 
         if(twoPanes) {
             bookDetailsFragment.displayBook(toPass);
