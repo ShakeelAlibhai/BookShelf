@@ -10,8 +10,15 @@ import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     private ArrayList<Book> getBooks() {
-        ArrayList<Book> arrayList = new ArrayList<>();
+        final ArrayList<Book> arrayList = new ArrayList<>();
 //        ArrayList<HashMap> arrayList = new ArrayList<>();
 
 //        HashMap<String, String> book1 = new HashMap<String, String>();
@@ -107,6 +114,31 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         arrayList.add(new Book(8, "Title 8", "Author 8", ""));
         arrayList.add(new Book(9, "Title 9", "Author 9", ""));
         arrayList.add(new Book(10, "Title 10", "Author 10", ""));
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(
+                            new InputStreamReader(
+                                    new URL("https://kamorris.com/lab/abp/booksearch.php").openStream()
+                            )
+                    );
+                    String books = bufferedReader.readLine();
+                    bufferedReader.close();
+
+                    JSONArray array = new JSONArray(books);
+
+                    int i = array.length();
+                    arrayList.add(new Book(10, "" + i, "Author", ""));
+
+                } catch (Exception e) {
+
+                }
+            }
+        };
+
+        t.start();
 
         return arrayList;
     }
