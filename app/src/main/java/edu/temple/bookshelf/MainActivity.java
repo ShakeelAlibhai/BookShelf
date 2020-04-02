@@ -13,9 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,7 +86,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             @Override
             public void onClick(View v) {
 
-                //Search books for the search term
+                //Search books for the search term by going through each book in the database
+                //(This is done by re-calling the getBooks() method)
+
                 String searchTerm = textView.getText().toString();
 
                 booksToDisplay.clear();
@@ -135,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         arrayList.add(new Book(10, "Title 10", "Author 10", ""));
 
         String url = "https://kamorris.com/lab/abp/booksearch.php";
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
 
@@ -165,6 +172,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
                     }
                 });
+
+        requestQueue.add(jsonArrayRequest);
 
         return arrayList;
     }
