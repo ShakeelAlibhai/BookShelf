@@ -32,6 +32,8 @@ public class BookListFragment extends Fragment {
     BookSelectedInterface parentActivity;
     ArrayList<Book> books;
 
+    private BookAdapter ba;
+
     final static String BOOK_LIST_KEY = "book_list_key";
 
     @Override
@@ -61,7 +63,7 @@ public class BookListFragment extends Fragment {
         // Inflate the layout for this fragment
         ListView view = (ListView)inflater.inflate(R.layout.fragment_book_list, container, false);
 
-        BookAdapter ba = new BookAdapter(this.getContext(), books);
+        ba = new BookAdapter(this.getContext(), books);
         view.setAdapter(ba);
 
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +75,12 @@ public class BookListFragment extends Fragment {
 
         return view;
     }
+
+    public void updateBooks(ArrayList<Book> newBooks) {
+        books = newBooks;
+        ba.notifyDataSetChanged();
+    }
+
     /*
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
