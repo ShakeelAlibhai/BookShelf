@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     EditText textView;
     Button searchButton;
 
+    int currentBookId = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +49,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         twoPanes = (findViewById(R.id.detailsFrame) != null);
 
         booksToDisplay = getBooks();
-
+        
         if(savedInstanceState != null) {
             booksToDisplay = (ArrayList<Book>)savedInstanceState.getSerializable("key");
+            currentBookId = savedInstanceState.getInt("currentBookId");
+
+            //Attempt to display the last-displayed book
+            if(currentBookId != 0) {
+                bookSelected(currentBookId);
+            }
         }
 
         bookListFragment = BookListFragment.newInstance(booksToDisplay);
@@ -106,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         outState.putSerializable("key", booksToDisplay);
+        outState.putInt("currentBookId", currentBookId);
 
         super.onSaveInstanceState(outState, outPersistentState);
     }
@@ -132,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     public void onResponse(JSONArray response) {
                         Toast.makeText(MainActivity.this, "" + response.length(), Toast.LENGTH_LONG).show();
                         for(int i = 0; i < response.length(); i++) {
-
+//                            arrayList.add(i);
                         }
                     }
                 },
@@ -160,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         if(twoPanes) {
             bookDetailsFragment.displayBook(toPass);
         } else {
+            currentBookId = toPass.getID();
             t.addToBackStack(null).replace(R.id.frame1, BookDetailsFragment.newInstance(
                     toPass.getID(),
                     toPass.getTitle(),
