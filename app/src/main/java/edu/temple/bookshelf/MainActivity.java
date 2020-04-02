@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -141,6 +142,18 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     public void onResponse(JSONArray response) {
                         Toast.makeText(MainActivity.this, "" + response.length(), Toast.LENGTH_LONG).show();
                         for(int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject temp = response.getJSONObject(i);
+                                Book newBook = new Book(
+                                        temp.getInt("id"),
+                                        temp.getString("title"),
+                                        temp.getString("author"),
+                                        temp.getString("coverURL")
+                                );
+                                arrayList.add(newBook);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 //                            arrayList.add(i);
                         }
                     }
