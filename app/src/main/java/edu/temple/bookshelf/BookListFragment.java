@@ -61,10 +61,6 @@ public class BookListFragment extends Fragment {
         // Inflate the layout for this fragment
         ListView view = (ListView)inflater.inflate(R.layout.fragment_book_list, container, false);
 
-        if(savedInstanceState != null) {
-            books = (ArrayList<Book>)savedInstanceState.getSerializable("key");
-        }
-
         BookAdapter ba = new BookAdapter(this.getContext(), books);
         view.setAdapter(ba);
 
@@ -77,13 +73,15 @@ public class BookListFragment extends Fragment {
 
         return view;
     }
-
+    /*
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putSerializable("key", books);
 
         super.onSaveInstanceState(outState);
     }
+
+     */
 
     public static BookListFragment newInstance(ArrayList<Book> books) {
         BookListFragment newFragment = new BookListFragment();
