@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         twoPanes = (findViewById(R.id.detailsFrame) != null);
 
         booksToDisplay = getBooks();
-        
+
         if(savedInstanceState != null) {
             booksToDisplay = (ArrayList<Book>)savedInstanceState.getSerializable("key");
             currentBookId = savedInstanceState.getInt("currentBookId");
