@@ -74,8 +74,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
             @Override
             public void onClick(View v) {
+
+                //Search books for the search term
                 String searchTerm = textView.getText().toString();
-                booksToDisplay = new ArrayList<>();
+
+                booksToDisplay.clear();
+//                booksToDisplay = new ArrayList<>();
 
                 ArrayList<Book> allBooks = getBooks();
                 for(int i = 0; i < allBooks.size(); i++) {
@@ -86,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                         booksToDisplay.add(currentBook);
                     }
                 }
+
+//                bookListFragment.updateBooks(booksToDisplay);
 
                 FragmentManager f = getSupportFragmentManager();
                 FragmentTransaction t = f.beginTransaction();
