@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         twoPanes = (findViewById(R.id.detailsFrame) != null);
 
-        booksToDisplay = getBooks();
+//        booksToDisplay = getBooks();
 
         if(savedInstanceState != null) {
             booksToDisplay = (ArrayList<Book>)savedInstanceState.getSerializable("key");
@@ -61,22 +61,26 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             if(currentBookId != 0) {
                 bookSelected(currentBookId);
             }
+
+            bookListFragment = BookListFragment.newInstance(booksToDisplay);
+
+            FragmentManager f = getSupportFragmentManager();
+            FragmentTransaction t = f.beginTransaction();
+            t.add(R.id.frame1, bookListFragment);
+
+            if(twoPanes) {
+                bookDetailsFragment = new BookDetailsFragment();
+                t.add(R.id.detailsFrame, bookDetailsFragment);
+            }
+
+            t.commit();
+
+            f.executePendingTransactions();
+        } else {
+            booksToDisplay = getBooks();
         }
 
-        bookListFragment = BookListFragment.newInstance(booksToDisplay);
 
-        FragmentManager f = getSupportFragmentManager();
-        FragmentTransaction t = f.beginTransaction();
-        t.add(R.id.frame1, bookListFragment);
-
-        if(twoPanes) {
-            bookDetailsFragment = new BookDetailsFragment();
-            t.add(R.id.detailsFrame, bookDetailsFragment);
-        }
-
-        t.commit();
-
-        f.executePendingTransactions();
 
         textView = (EditText)findViewById(R.id.searchField);
         searchButton = (Button)findViewById(R.id.searchButton);
@@ -92,26 +96,65 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 String searchTerm = textView.getText().toString();
 
                 booksToDisplay.clear();
+
+                String url = "https://kamorris.com/lab/abp/booksearch.php?search=" + searchTerm;
+
+                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONArray>() {
+
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                Toast.makeText(MainActivity.this, "" + response.length(), Toast.LENGTH_LONG).show();
+                                for(int i = 0; i < response.length(); i++) {
+                                    try {
+                                        JSONObject temp = response.getJSONObject(i);
+                                        Book newBook = new Book(
+                                                temp.getInt("book_id"),
+                                                temp.getString("title"),
+                                                temp.getString("author"),
+                                                temp.getString("cover_url")
+                                        );
+                                        booksToDisplay.add(newBook);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+//                            arrayList.add(i);
+                                }
+
+                                FragmentManager f = getSupportFragmentManager();
+                                FragmentTransaction t = f.beginTransaction();
+
+                                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(booksToDisplay));
+
+                                t.commit();
+                            }
+                        },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+
+                requestQueue.add(jsonArrayRequest);
 //                booksToDisplay = new ArrayList<>();
 
-                ArrayList<Book> allBooks = getBooks();
-                for(int i = 0; i < allBooks.size(); i++) {
-                    Book currentBook = allBooks.get(i);
-                    if(currentBook.getTitle().contains(searchTerm)) {
-                        booksToDisplay.add(currentBook);
-                    } else if(currentBook.getAuthor().contains(searchTerm)) {
-                        booksToDisplay.add(currentBook);
-                    }
-                }
+//                ArrayList<Book> allBooks = getBooks();
+//                for(int i = 0; i < allBooks.size(); i++) {
+//                    Book currentBook = allBooks.get(i);
+//                    if(currentBook.getTitle().contains(searchTerm)) {
+//                        booksToDisplay.add(currentBook);
+//                    } else if(currentBook.getAuthor().contains(searchTerm)) {
+//                        booksToDisplay.add(currentBook);
+//                    }
+//                }
 
 //                bookListFragment.updateBooks(booksToDisplay);
 
-                FragmentManager f = getSupportFragmentManager();
-                FragmentTransaction t = f.beginTransaction();
 
-                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(booksToDisplay));
-
-                t.commit();
             }
         });
     }
@@ -147,15 +190,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Toast.makeText(MainActivity.this, "" + response.length(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(MainActivity.this, "" + response.length(), Toast.LENGTH_LONG).show();
                         for(int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject temp = response.getJSONObject(i);
                                 Book newBook = new Book(
-                                        temp.getInt("id"),
+                                        temp.getInt("book_id"),
                                         temp.getString("title"),
                                         temp.getString("author"),
-                                        temp.getString("coverURL")
+                                        temp.getString("cover_url")
                                 );
                                 arrayList.add(newBook);
                             } catch (JSONException e) {
@@ -163,6 +206,21 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                             }
 //                            arrayList.add(i);
                         }
+
+                        bookListFragment = BookListFragment.newInstance(arrayList);
+
+                        FragmentManager f = getSupportFragmentManager();
+                        FragmentTransaction t = f.beginTransaction();
+                        t.add(R.id.frame1, bookListFragment);
+
+                        if(twoPanes) {
+                            bookDetailsFragment = new BookDetailsFragment();
+                            t.add(R.id.detailsFrame, bookDetailsFragment);
+                        }
+
+                        t.commit();
+
+                        f.executePendingTransactions();
                     }
                 },
                 new Response.ErrorListener() {
@@ -174,6 +232,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 });
 
         requestQueue.add(jsonArrayRequest);
+
+
 
         return arrayList;
     }
