@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 //                            arrayList.add(i);
                                 }
 
-
+                                
                                 bookListFragment.updateBooks(booksToDisplay);
 
 //                                FragmentManager f = getSupportFragmentManager();
