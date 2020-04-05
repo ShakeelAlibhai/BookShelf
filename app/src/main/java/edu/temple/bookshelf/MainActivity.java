@@ -123,12 +123,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 //                            arrayList.add(i);
                                 }
 
-                                FragmentManager f = getSupportFragmentManager();
-                                FragmentTransaction t = f.beginTransaction();
 
-                                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(booksToDisplay));
+                                bookListFragment.updateBooks(booksToDisplay);
 
-                                t.commit();
+//                                FragmentManager f = getSupportFragmentManager();
+//                                FragmentTransaction t = f.beginTransaction();
+//
+//                                t.addToBackStack(null).replace(R.id.frame1, BookListFragment.newInstance(booksToDisplay));
+//
+//                                t.commit();
                             }
                         },
                         new Response.ErrorListener() {
