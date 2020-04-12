@@ -1,6 +1,7 @@
 package edu.temple.bookshelf;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,8 @@ public class BookDetailsFragment extends Fragment {
     TextView titleTextView, authorTextView;
     ImageView coverImageView;
 
+    private BookMediaInterface parentActivity;
+
     public BookDetailsFragment() {}
 
     public static BookDetailsFragment newInstance(Book book) {
@@ -38,6 +41,17 @@ public class BookDetailsFragment extends Fragment {
         args.putParcelable(BOOK_KEY, book);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof BookMediaInterface) {
+            parentActivity = (BookMediaInterface) context;
+        } else {
+            throw new RuntimeException("Please implement the required interface(s)");
+        }
     }
 
     @Override
@@ -56,6 +70,14 @@ public class BookDetailsFragment extends Fragment {
         titleTextView = v.findViewById(R.id.titleTextView);
         authorTextView = v.findViewById(R.id.authorTextView);
         coverImageView = v.findViewById(R.id.coverImageView);
+
+        v.findViewById(R.id.playButton).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parentActivity.playButtonClicked(book);
+            }
+        });
 
         /*
         Because this fragment can be created with or without
@@ -77,5 +99,9 @@ public class BookDetailsFragment extends Fragment {
         // Picasso simplifies image loading from the web.
         // No need to download separately.
         Picasso.get().load(book.getCoverUrl()).into(coverImageView);
+    }
+
+    interface BookMediaInterface {
+        void playButtonClicked(Book book);
     }
 }

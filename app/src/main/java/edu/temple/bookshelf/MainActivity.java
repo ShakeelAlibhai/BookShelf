@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
+public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface, BookDetailsFragment.BookMediaInterface {
 
     private static final String BOOKS_KEY = "books";
     private static final String SELECTED_BOOK_KEY = "selectedBook";
