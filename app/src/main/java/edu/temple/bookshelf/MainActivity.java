@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     EditText searchEditText;
 
     boolean connected;
+    Intent serviceIntent;
 
     private final String SEARCH_API = "https://kamorris.com/lab/abp/booksearch.php?search=";
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
         });
 
-        Intent intent;
+
 
         ServiceConnection serviceConnection = new ServiceConnection() {
 
