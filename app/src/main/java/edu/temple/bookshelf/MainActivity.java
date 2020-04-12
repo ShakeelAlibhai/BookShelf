@@ -48,12 +48,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     boolean connected;
     Intent serviceIntent;
+    AudiobookService.MediaControlBinder audiobookService;
 
     ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             connected = true;
+            audiobookService = (AudiobookService.MediaControlBinder) service;
         }
 
         @Override
