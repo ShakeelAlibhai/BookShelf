@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     public void playButtonClicked(Book book) {
         //To do
+        Toast.makeText(MainActivity.this, "Play button clicked!", Toast.LENGTH_SHORT).show();
     }
 
     public void pauseButtonClicked() {
