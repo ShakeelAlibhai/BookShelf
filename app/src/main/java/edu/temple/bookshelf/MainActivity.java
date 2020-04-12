@@ -3,7 +3,11 @@ package edu.temple.bookshelf;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     EditText searchEditText;
 
+    boolean connected;
+
     private final String SEARCH_API = "https://kamorris.com/lab/abp/booksearch.php?search=";
 
     @Override
@@ -56,6 +62,21 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 fetchBooks(searchEditText.getText().toString());
             }
         });
+
+        Intent intent;
+
+        ServiceConnection serviceConnection = new ServiceConnection() {
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                connected = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                connected = false;
+            }
+        };
 
         /*
         If we previously saved a book search and/or selected a book, then use that
