@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import edu.temple.audiobookplayer.AudiobookService;
+
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface, BookDetailsFragment.BookMediaInterface {
 
     private static final String BOOKS_KEY = "books";
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        serviceIntent = new Intent(MainActivity.this, AudiobookService.class);
+        bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE);
 
 //        serviceIntent = new Intent(MainActivity.this, serviceConnection, BIND_AUTO_CREATE);
 
