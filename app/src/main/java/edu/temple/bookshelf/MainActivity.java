@@ -226,6 +226,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         if(connected) {
             int bookId = book.getId();
             //Start playing
+
+            startService(serviceIntent);
         }
     }
 
@@ -234,6 +236,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     }
 
     public void stopButtonClicked() {
-        //To do
+        if(connected) {
+
+
+            stopService((serviceIntent));
+        }
     }
 }
