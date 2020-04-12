@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        serviceIntent = new Intent(MainActivity.this, serviceConnection, BIND_AUTO_CREATE);
+
         searchEditText = findViewById(R.id.searchEditText);
 
         /*
@@ -202,6 +204,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 
     @Override
