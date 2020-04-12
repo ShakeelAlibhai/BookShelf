@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     boolean twoPane;
     BookListFragment bookListFragment;
     BookDetailsFragment bookDetailsFragment;
+    SeekBar seekBar;
 
     ArrayList<Book> books;
     RequestQueue requestQueue;
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 fetchBooks(searchEditText.getText().toString());
             }
         });
+
+        seekBar = findViewById(R.id.seekBar);
 
 
         /*
