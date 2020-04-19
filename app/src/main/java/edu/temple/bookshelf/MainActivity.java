@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     private static final String BOOKS_KEY = "books";
     private static final String SELECTED_BOOK_KEY = "selectedBook";
+    private static final String BOOK_POSITION_KEY = "bookPosition";
 
     FragmentManager fm;
 
@@ -98,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         if (savedInstanceState != null) {
             books = savedInstanceState.getParcelableArrayList(BOOKS_KEY);
             selectedBook = savedInstanceState.getParcelable(SELECTED_BOOK_KEY);
+
+            audiobookService.play(selectedBook.getId());
         }
         else
             books = new ArrayList<Book>();
