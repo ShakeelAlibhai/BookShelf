@@ -237,18 +237,18 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         if(connected) {
             int bookId = book.getId();
             //Start playing
-
+            audiobookService.play(bookId);
             startService(serviceIntent);
         }
     }
 
     public void pauseButtonClicked() {
-        //To do
+        audiobookService.pause();
     }
 
     public void stopButtonClicked() {
         if(connected) {
-
+            audiobookService.stop();
 
             stopService((serviceIntent));
         }
