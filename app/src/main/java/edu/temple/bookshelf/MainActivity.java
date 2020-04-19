@@ -145,6 +145,20 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                         .commit();
             }
         }
+
+        findViewById(R.id.pauseButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pauseButtonClicked();
+            }
+        });
+
+        findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopButtonClicked();
+            }
+        });
     }
 
     /*
