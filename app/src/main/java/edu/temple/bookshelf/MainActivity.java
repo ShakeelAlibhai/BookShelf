@@ -305,7 +305,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             AudiobookService.BookProgress bookProgress = (AudiobookService.BookProgress) msg.obj;
             int bookId = bookProgress.getBookId();
             int progress = bookProgress.getProgress();
-            seekBar.setProgress((int)((float)(progress / seekBar.getMax()) * selectedBook.getDuration()));
+            int seekTo = (int)(((float)progress / seekBar.getMax()) * selectedBook.getDuration());
+            seekBar.setProgress(seekTo);
             return false;
         }
     });
