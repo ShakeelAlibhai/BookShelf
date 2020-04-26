@@ -173,7 +173,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if(fromUser) {
-                    audiobookService.seekTo((int)((float)(progress / seekBar.getMax()) * selectedBook.getDuration()));
+                    int seekTo = (int)(((float)progress / seekBar.getMax()) * selectedBook.getDuration());
+                    Toast.makeText(MainActivity.this, "Seeking to " + seekTo, Toast.LENGTH_SHORT).show();
+                    audiobookService.seekTo(seekTo);
                 }
             }
 
