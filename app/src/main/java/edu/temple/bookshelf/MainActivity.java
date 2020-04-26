@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         public void onServiceConnected(ComponentName name, IBinder service) {
             connected = true;
             audiobookService = (AudiobookService.MediaControlBinder) service;
+            audiobookService.setProgressHandler(progressHandler);
         }
 
         @Override
