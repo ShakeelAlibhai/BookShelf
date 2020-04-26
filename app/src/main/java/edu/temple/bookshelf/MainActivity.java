@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
         });
 
-        seekBar = findViewById(R.id.seekBar);
+//        seekBar = findViewById(R.id.seekBar);
 
 
         /*
@@ -167,12 +167,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             }
         });
 
-        SeekBar seekBar;
+//        SeekBar seekBar;
         seekBar = findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                audiobookService.seekTo(progress);
+                if(fromUser) {
+                    audiobookService.seekTo(progress);
+                }
             }
 
             @Override
