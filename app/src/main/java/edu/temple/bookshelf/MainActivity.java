@@ -297,6 +297,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
         @Override
         public boolean handleMessage(@NonNull Message msg) {
+            AudiobookService.BookProgress bookProgress = (AudiobookService.BookProgress) msg.obj;
+            int bookId = bookProgress.getBookId();
+            int progress = bookProgress.getProgress();
+            seekBar.setProgress(progress);
             return false;
         }
     });
